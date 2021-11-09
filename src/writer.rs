@@ -143,6 +143,15 @@ impl Disk {
         }
     }
 
+    pub fn finish_entry(&self) -> ArchiveResult<()> {
+        unsafe {
+            match ffi::archive_write_finish_entry(self.handle()) {
+                ffi::ARCHIVE_OK => Ok(()),
+                _ => Err(ArchiveError::from(self as &Handle)),
+            }
+        }
+    }
+
     pub fn close(&self) -> ArchiveResult<()> {
         unsafe {
             match ffi::archive_write_close(self.handle()) {
