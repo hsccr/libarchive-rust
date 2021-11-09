@@ -152,7 +152,7 @@ impl Disk {
         }
     }
 
-    fn write_data<T: Reader>(&self, reader: &T) -> ArchiveResult<usize> {
+    pub fn write_data<T: Reader>(&self, reader: &T) -> ArchiveResult<usize> {
         let mut buff = ptr::null();
         let mut size = 0;
         let mut offset = 0;
@@ -176,7 +176,7 @@ impl Disk {
         }
     }
 
-    fn write_header(&self, entry: &ReaderEntry) -> ArchiveResult<()> {
+    pub fn write_header(&self, entry: &ReaderEntry) -> ArchiveResult<()> {
         unsafe {
             match ffi::archive_write_header(self.handle, entry.entry()) {
                 ffi::ARCHIVE_OK => Ok(()),
